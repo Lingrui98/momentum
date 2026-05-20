@@ -39,7 +39,7 @@ export const IntroScreen: React.FC<IntroScreenProps> = ({
   };
 
   return (
-    <div className="bg-background relative min-h-screen overflow-x-hidden font-sans transition-colors duration-500 selection:bg-violet-600 selection:text-white dark:selection:bg-violet-400 dark:selection:text-black">
+    <div className="bg-background relative min-h-screen overflow-x-clip font-sans transition-colors duration-500 selection:bg-violet-600 selection:text-white dark:selection:bg-violet-400 dark:selection:text-black">
       {/* Header */}
       <nav className="nav-glass fixed left-0 right-0 top-0 z-50 flex h-16 items-center justify-between px-6">
         <div className="flex items-center space-x-3">
