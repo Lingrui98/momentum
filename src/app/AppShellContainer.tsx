@@ -10,7 +10,6 @@ import { useRecycleBinDomain } from '../hooks/domains/useRecycleBinDomain';
 import { useRsipDomain } from '../hooks/domains/useRsipDomain';
 import { useImportExportDomain } from '../hooks/domains/useImportExportDomain';
 import { useGroupDomain } from '../hooks/domains/useGroupDomain';
-import { usePetDomain } from '../hooks/domains/usePetDomain';
 import { useAppDataLoad } from './hooks/useAppDataLoad';
 import { useAuthController } from './hooks/useAuthController';
 import { useServiceLifecycle } from './hooks/useServiceLifecycle';
@@ -21,10 +20,10 @@ import { AppShellView } from './AppShellView';
 import {
   buildAppViewModel,
   buildDashboardViewModel,
-  buildPetViewModel,
   buildRsipViewModel,
   buildSessionViewModel,
 } from './app-shell/viewModelBuilders';
+import type { AppShellPetViewModel } from './app-shell/types';
 import {
   appShellStore,
   createInitialAppState,
@@ -39,6 +38,25 @@ import {
   selectViewingChainId,
   useAppShellStore,
 } from '../stores/appShellStore';
+
+const noopAsync = async () => undefined;
+const DISABLED_PET_VIEW_MODEL: AppShellPetViewModel = {
+  pet: null,
+  mood: 'neutral',
+  isLoading: false,
+  hasPet: false,
+  createPet: async () => {
+    throw new Error('Pet feature is disabled');
+  },
+  feedPet: async () => null,
+  onTaskCompleted: async () => null,
+  updatePosition: noopAsync,
+  updateMinimizedPosition: noopAsync,
+  toggleVisibility: noopAsync,
+  showPet: noopAsync,
+  minimize: noopAsync,
+  expand: noopAsync,
+};
 
 export default function AppShellContainer() {
   const storage = useStorage();
@@ -174,8 +192,6 @@ export default function AppShellContainer() {
     },
   });
 
-  const petDomain = usePetDomain();
-
   const {
     handleScheduleChain,
     handleStartChain,
@@ -209,7 +225,6 @@ export default function AppShellContainer() {
     onNavigateToDashboard: () => {
       appShellStore.getState().navigateToDashboard();
     },
-    onPetTaskCompleted: petDomain.onTaskCompleted,
     onRsipTaskEvent: async (payload) => {
       await handleTaskEventIntegration(payload);
     },
@@ -385,7 +400,7 @@ export default function AppShellContainer() {
     handleAuxiliaryJudgmentAllow,
   });
 
-  const pet = buildPetViewModel(petDomain);
+  const pet = DISABLED_PET_VIEW_MODEL;
 
   return (
     <AppShellView

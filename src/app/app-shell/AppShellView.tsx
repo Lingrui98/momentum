@@ -26,8 +26,7 @@ export function AppShellView({
   pet,
 }: AppShellViewProps) {
   const { tr } = useI18n();
-  const shouldShowPetWidget =
-    app.isInitialized && app.currentView === 'dashboard';
+  const shouldShowPetWidget = false;
 
   const renderAuxiliaryJudgment = () => {
     const auxiliaryJudgmentChain = session.auxiliaryJudgmentChain;

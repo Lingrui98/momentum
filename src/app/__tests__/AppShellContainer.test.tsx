@@ -16,7 +16,6 @@ const useRecycleBinDomainMock = vi.hoisted(() => vi.fn());
 const useRsipDomainMock = vi.hoisted(() => vi.fn());
 const useImportExportDomainMock = vi.hoisted(() => vi.fn());
 const useGroupDomainMock = vi.hoisted(() => vi.fn());
-const usePetDomainMock = vi.hoisted(() => vi.fn());
 
 const useAppDataLoadMock = vi.hoisted(() => vi.fn());
 const useAuthControllerMock = vi.hoisted(() => vi.fn());
@@ -104,10 +103,6 @@ vi.mock('../../hooks/domains/useGroupDomain', () => ({
   useGroupDomain: useGroupDomainMock,
 }));
 
-vi.mock('../../hooks/domains/usePetDomain', () => ({
-  usePetDomain: usePetDomainMock,
-}));
-
 vi.mock('../hooks/useAppDataLoad', () => ({
   useAppDataLoad: useAppDataLoadMock,
 }));
@@ -165,22 +160,6 @@ describe('AppShellContainer', () => {
 
     useStorageMock.mockReturnValue({ kind: 'local' });
     useSafeSaveChainsMock.mockReturnValue(vi.fn(async () => undefined));
-    usePetDomainMock.mockReturnValue({
-      pet: null,
-      mood: 'neutral',
-      isLoading: false,
-      hasPet: false,
-      createPet: vi.fn(),
-      feedPet: vi.fn(),
-      onTaskCompleted: vi.fn(),
-      updatePosition: vi.fn(),
-      updateMinimizedPosition: vi.fn(),
-      toggleVisibility: vi.fn(),
-      showPet: vi.fn(),
-      minimize: vi.fn(),
-      expand: vi.fn(),
-    });
-
     useChainsDomainMock.mockReturnValue({
       handleCreateChain: handlers.handleCreateChain,
       handleCreateTaskGroup: handlers.handleCreateTaskGroup,

@@ -238,7 +238,7 @@ describe('AppShellView', () => {
     render(<AppShellView {...createProps()} />);
 
     expect(await screen.findByTestId('dashboard')).toBeInTheDocument();
-    expect(await screen.findByTestId('pet-widget')).toBeInTheDocument();
+    expect(screen.queryByTestId('pet-widget')).not.toBeInTheDocument();
 
     const link = screen.getByText('Skip to main content');
     const main = document.getElementById('main');
